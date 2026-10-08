@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
+#include <sys/wait.h>
 
 int main() {
     pid_t pid;
@@ -9,12 +9,15 @@ int main() {
 
     if (pid == 0) {
         // Child Process
-        printf("Child Process\n");
+        printf("Child Process:\n");
+        for (int i = 1; i <= 5; i++) {
+            printf("%d\n", i);
+        }
     } else if (pid > 0) {
         // Parent Process
-        printf("Parent Process\n");
+        wait(NULL);   // Wait for child to finish
+        printf("Parent Process: Child has finished.\n");
     } else {
-        // Fork failed
         printf("Fork failed!\n");
     }
 
